@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Facebook Video Downloader">
     <meta name="author" content="">
-    <link rel="icon" href="https://getbootstrap.com/favicon.ico">
+    <link rel="icon" type="image/png" href="https://nhatkythuthuat.com/styles/Logo_ico.png" sizes="32x32" />
     <title>Facebook Video Downloader - Nhatkythuthuat.com</title>
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
