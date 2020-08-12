@@ -1,15 +1,3 @@
-<?php
-//$q="https://www.facebook.com/940863846094937/videos/940927409421914/";
-function getBetween($content,$start,$end){
-	$r = explode($start, $content);
-	if (isset($r[1])){
-		$r = explode($end, $r[1]);
-		return $r[0];
-	}
-	return '';
-	}
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,12 +6,9 @@ function getBetween($content,$start,$end){
     <meta name="description" content="Facebook Video Downloader">
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
-
     <title>Facebook Video Downloader - Nhatkythuthuat.com</title>
-
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.0/examples/cover/cover.css" rel="stylesheet">
     <style type="text/css">
@@ -39,6 +24,7 @@ function getBetween($content,$start,$end){
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto text-center">
           <h3><a href="https://nhatkythuthuat.com">Nhatkythuthuat.com</a></h3>
+          <p><a href="https://github.com/bcat95/Facebook-Video-Downloader">Code on Github</a></p>
       </header>
 
       <main role="main" class="inner cover">
@@ -60,18 +46,20 @@ function getBetween($content,$start,$end){
 				curl_close($ch );
 				$html_encoded = htmlentities($data);
 
-				if (stripos($data,"hd_src_no_ratelimit:")!=false && stripos($data, "aspect_ratio")!=false) {
-					$start = "hd_src_no_ratelimit:";
-					$end = ",aspect_ratio";
-					$videoHD = getBetween($data,$start,$end);
+				$re = '/hd_src:"(.*?)",sd_src/m';
+				preg_match_all($re, $data, $matches, PREG_SET_ORDER, 0);
+				if ($matches && is_array($matches) && sizeof($matches)>0){
+					$matches = $matches[0];
+					if ($matches && is_array($matches) && sizeof($matches)>1) $videoHD = $matches[1];
 				} else {
 					$videoHD = "";
 				}
 
-				if (stripos($data,"sd_src_no_ratelimit:")!=false && stripos($data, "aspect_ratio")!=false) {
-					$start = "sd_src_no_ratelimit:";
-					$end = ",aspect_ratio";
-					$videoSD = getBetween($data,$start,$end);
+				$re = '/sd_src_no_ratelimit:"(.*?)"/m';
+				preg_match_all($re, $data, $matches, PREG_SET_ORDER, 0);
+				if ($matches && is_array($matches) && sizeof($matches)>0){
+					$matches = $matches[0];
+					if ($matches && is_array($matches) && sizeof($matches)>1) $videoSD = $matches[1];
 				} else {
 					$videoSD = "";
 				}
@@ -93,7 +81,6 @@ function getBetween($content,$start,$end){
 		            </video>
 	        	</div>
 	        </div>
-
 			<?php
 				}
 			?>
@@ -114,6 +101,3 @@ function getBetween($content,$start,$end){
     <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
   </body>
 </html>
-
-
-			
